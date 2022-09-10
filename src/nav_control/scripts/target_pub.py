@@ -133,7 +133,8 @@ class MoveBaseSeq():
         self.movebase_client()
 
     def callback1(self, msg):
-        frame = msg.data
+        nparr = np.fromstring(msg.data, np.uint8)
+        frame=cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         ret, corners = cv2.findChessboardCorners(gray, (9, 6), None)
         if ret:    # 画面中有棋盘格
@@ -147,7 +148,7 @@ class MoveBaseSeq():
             self.P_robot_ar = tvec
             # rvec_matrix = cv2.Rodrigues(rvec)[0]    # 旋转向量->旋转矩阵
             # proj_matrix = np.hstack((rvec_matrix, tvec))    # 合并
-            # self.homo_matrix = np.vstack(proj_matrix, np.array([0, 0, 0, 1])) # 齐次矩阵
+            # self.homo_matrix = np.vstack(proj_matrix, np.array([0, 0, 0, 1])) # 齐次矩阵\\\\\\\\\\\\\\\\\\\\\\
 
             # eulerAngles = cv2.decomposeProjectionMatrix(proj_matrix)[6]  # 欧拉角
             # pitch, yaw, roll = eulerAngles[0], eulerAngles[1], eulerAngles[2]

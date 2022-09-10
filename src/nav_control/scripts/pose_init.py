@@ -2,7 +2,7 @@
 '''
 Author: fengsc
 Date: 2022-07-26 16:25:37
-LastEditTime: 2022-07-31 18:36:38
+LastEditTime: 2022-09-10 23:04:04
 '''
 from time import sleep
 import rospy
@@ -58,5 +58,5 @@ if __name__ == "__main__":
     global pose_pub, twist_pub
     pose_pub = rospy.Publisher(
         '/initialpose', PoseWithCovarianceStamped, queue_size=1)
-    twist_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+    twist_pub = rospy.Publisher('mobile_base/commands/velocity', Twist, queue_size=1)
     main()

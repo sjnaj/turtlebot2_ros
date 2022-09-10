@@ -1,7 +1,7 @@
 '''
 Author: fengsc
 Date: 2022-09-06 18:49:06
-LastEditTime: 2022-09-06 19:07:41
+LastEditTime: 2022-09-10 19:13:01
 '''
 import glob
 import math
@@ -29,13 +29,13 @@ for fname in images:
         else:
             img_points.append(corners)
         cv2.drawChessboardCorners(
-            img, (9, 6), corners, ret)  # 记住，OpenCV的绘制函数一般无返回值
+            img, (9, 6), corners, ret)  # OpenCV的绘制函数一般无返回值
         cv2.waitKey(1)
 _, mtx, dist, _, _ = cv2.calibrateCamera(
     obj_points, img_points, size, None, None)
 
 # 内参数矩阵
-Camera_intrinsic = {"mtx": mtx, "dist": dist, }
+Camera_intrinsic = {"mtx":s mtx, "dist": dist, }
 print(Camera_intrinsic)
 
 # test
