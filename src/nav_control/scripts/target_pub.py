@@ -123,18 +123,21 @@ class MoveBaseSeq():
 
     def callback(self, msg):
         self.goal_cnt = 0
+        if(msg.data[len(msg.data)-1] == -100):  # AR模式
+            points_seq = [self.P_ros_robot-self.P_ar_robot+msg.data[i:i+3]
+                          for i in range(0, len(msg.data)-3, 3)]
+        else:
+            points_seq = [msg.data[i:i+3] for i in range(0, len(msg.data), 3)]
 
-        points_seq = [msg.data[i:i+3] for i in range(0, len(msg.data), 3)]
-        for P_ar_target in points_seq:
-            P_ros_target = self.P_ros_robot-self.P_ar_robot+P_ar_target
-            P_ros_target[1] = 0  # 高度为0，不考虑标记物的旋转
+        for point in points_seq:
+            point[2] = 0  # 高度为0，不考虑标记物的旋转
             self.pose_seq.append(
-                Pose(P_ros_target, quaternion_from_euler(0, 0, 0, axes='sxyz')))  # 默认姿态
+                Pose(point, quaternion_from_euler(0, 0, 0, axes='sxyz')))  # 默认姿态
         self.movebase_client()
 
     def callback1(self, msg):
         nparr = np.fromstring(msg.data, np.uint8)
-        frame=cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         ret, corners = cv2.findChessboardCorners(gray, (9, 6), None)
         if ret:    # 画面中有棋盘格

@@ -16,7 +16,7 @@ limitations under the License.
 <launch>
 
     <include file="$(find turtlebot_bringup)/launch/minimal.launch" />
-    <include file="$(find openni_launch)/launch/openni.launch" /> 
+    <include file="$(find openni_launch)/launch/openni.launch" />
 
     <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch">
         <!-- <param name="port" value="9090"/> -->
